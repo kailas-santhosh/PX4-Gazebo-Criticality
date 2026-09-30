@@ -1,0 +1,17 @@
+# Pinned versions for PX4-Gazebo-Criticality
+# Sourced by setup scripts. Do not add "echo" statements.
+
+export PX4_REPO="https://github.com/PX4/PX4-Autopilot.git"
+export PX4_TAG="v1.17.0"
+export PX4_COMMIT="d6f12ad1c4f70ad3230afd7d86e971421e02fef4"
+
+export XRCE_REPO="https://github.com/eProsima/Micro-XRCE-DDS-Agent.git"
+export XRCE_COMMIT="a88c712b41a01e92583f4723f7f4f686863cf657"
+
+export PX4_MSGS_REPO="https://github.com/PX4/px4_msgs.git"
+export PX4_MSGS_COMMIT="8fb8277cf95c4ba87094146bc8922e76c4ac0799"
+
+export PX4_ROS_COM_REPO="https://github.com/PX4/px4_ros_com.git"
+export PX4_ROS_COM_COMMIT="86e9aeb20e55a4673fa8a9f1c29ea06a6c5ad1af"
+
+export ROS_DISTRO="jazzy"

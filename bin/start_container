@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /home/ubuntu/Desktop/px4-gazebo-criticality
+./scripts/host/start_dev.sh

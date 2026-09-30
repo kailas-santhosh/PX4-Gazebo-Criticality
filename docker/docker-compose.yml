@@ -1,0 +1,44 @@
+services:
+
+  ros2-dev:
+
+    image: px4-gazebo-criticality:0.1
+
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+
+    container_name: px4-gazebo-criticality
+
+    hostname: px4-dev
+
+    network_mode: host
+
+    stdin_open: true
+    tty: true
+
+    working_dir: /workspace
+
+    restart: "no"
+
+    volumes:
+
+      - type: bind
+        source: ..
+        target: /workspace
+
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+      - /dev/dri:/dev/dri
+
+    environment:
+
+      - DISPLAY
+
+      - QT_X11_NO_MITSHM=1
+
+      - LIBGL_ALWAYS_SOFTWARE=0
+
+      - ROS_DOMAIN_ID=0
+
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp

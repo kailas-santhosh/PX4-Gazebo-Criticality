@@ -1,0 +1,173 @@
+Now I had to run this:
+
+git submodule deinit -f platforms/nuttx/NuttX/nuttx
+
+rm -rf platforms/nuttx/NuttX/nuttx
+
+rm -rf .git/modules/platforms/nuttx/NuttX/nuttx
+
+git submodule update --init platforms/nuttx/NuttX/nuttx
+
+as this error was shown:
+
+Shows this:
+
+Cloning into '/workspace/robotics/PX4-Autopilot/test/fuzztest'...
+
+Submodule path 'Tools/simulation/gazebo-classic/sitl_gazebo-classic': checked out '6697ab169ceab512dc706acea63df4c882662c60'
+
+Submodule 'external/OpticalFlow' (https://github.com/PX4/OpticalFlow.git) registered for path 'Tools/simulation/gazebo-classic/sitl_gazebo-classic/external/OpticalFlow'
+
+Cloning into '/workspace/robotics/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/external/OpticalFlow'...
+
+Submodule path 'Tools/simulation/gazebo-classic/sitl_gazebo-classic/external/OpticalFlow': checked out '28ef45c1fcb532b2bfd54c16b059c6a545143b2f'
+
+Submodule 'external/klt_feature_tracker' (https://github.com/ethz-ait/klt_feature_tracker.git) registered for path 'Tools/simulation/gazebo-classic/sitl_gazebo-classic/external/OpticalFlow/external/klt_feature_tracker'
+
+Cloning into '/workspace/robotics/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/external/OpticalFlow/external/klt_feature_tracker'...
+
+Submodule path 'Tools/simulation/gazebo-classic/sitl_gazebo-classic/external/OpticalFlow/external/klt_feature_tracker': checked out '9b5b567ae77f93d1ef4d36151529ba2506a46e7a'
+
+Submodule path 'Tools/simulation/gz': checked out 'b6127f4ec20de867e215fb5f78ae88b80f371909'
+
+Submodule path 'Tools/simulation/jmavsim/jMAVSim': checked out '66b764ada522893c05224950aa6268c809f8e48a'
+
+Submodule 'jMAVlib' (https://github.com/PX4/jMAVlib.git) registered for path 'Tools/simulation/jmavsim/jMAVSim/jMAVlib'
+
+Cloning into '/workspace/robotics/PX4-Autopilot/Tools/simulation/jmavsim/jMAVSim/jMAVlib'...
+
+Submodule path 'Tools/simulation/jmavsim/jMAVSim/jMAVlib': checked out 'c08380767b21938391bec676a43b36b837af9ba4'
+
+Submodule path 'boards/modalai/voxl2/libfc-sensor-api': checked out '85151aaf6ba8b24ce82b387e088452c63f7e2096'
+
+fatal: Unable to find current revision in submodule path 'platforms/nuttx/NuttX/nuttx'
+
+root@px4-dev:/workspace/setup#
+
+
+Then I had this error:
+
+Setting up gcc-multilib (4:13.2.0-7ubuntu1) ...
+Setting up libx32stdc++-13-dev (13.3.0-6ubuntu2~24.04.1) ...
+Setting up g++-13-multilib (13.3.0-6ubuntu2~24.04.1) ...
+Setting up g++-multilib (4:13.2.0-7ubuntu1) ...
+Processing triggers for ccache (4.9.1-1) ...
+Updating symlinks in /usr/lib/ccache ...
+Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+
+Fetching Xtensa compilers
+sudo: unable to resolve host px4-dev: Temporary failure in name resolution
+Tools/setup/ubuntu.sh: line 181: /home/root/.bashrc: No such file or directory
+
+
+I ran these commands to fix it:
+
+mkdir -p /home/root
+touch /home/root/.bashrc
+
+
+Then I got this error:
+
+root@px4-dev:/workspace/setup# ./05_build_ros_workspace.sh 
+[INFO] Building ROS 2 workspace...
+/opt/ros/jazzy/setup.bash: line 8: AMENT_TRACE_SETUP_FILES: unbound variable
+
+I added 
+
+source_ros() {
+    set +u
+    source /opt/ros/jazzy/setup.bash
+    set -u
+}
+
+in 00_cmmon.sh
+
+and replaced every occurence of
+
+source /opt/ros/jazzy/setup.bash
+
+with
+
+source_ros
+
+Then I faced issues while installing python venv. SO I replaced requirements.txt with this:
+
+attrs
+certifi
+click
+cryptography
+idna
+Jinja2
+jsonschema
+MarkupSafe
+pillow
+Pygments
+pyparsing
+pyserial
+python-dateutil
+PyYAML
+requests
+rich
+setuptools
+six
+typing_extensions
+urllib3
+wheel
+
+Then after running sim alias inside the container got this error:
+
+==> CPACK_INSTALL_PREFIX = @DEB_INSTALL_PREFIX@
+-- Configuring done (6.6s)
+CMake Error at cmake/px4_add_library.cmake:42 (add_library):
+  Cannot find source file:
+
+    heatshrink/heatshrink_decoder.c
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .ixx .cppm
+  .ccm .cxxm .c++m .h .hh .h++ .hm .hpp .hxx .in .txx .f .F .for .f77 .f90
+  .f95 .f03 .hip .ispc
+Call Stack (most recent call first):
+  src/lib/heatshrink/CMakeLists.txt:36 (px4_add_library)
+
+
+CMake Error at cmake/px4_add_library.cmake:42 (add_library):
+  No SOURCES given to target: heatshrink
+Call Stack (most recent call first):
+  src/lib/heatshrink/CMakeLists.txt:36 (px4_add_library)
+
+
+So I did this to fix it:
+
+cd /workspace/robotics/PX4-Autopilot
+
+git submodule deinit -f src/lib/heatshrink/heatshrink
+
+rm -rf src/lib/heatshrink/heatshrink
+
+git submodule update --init --recursive src/lib/heatshrink/heatshrink
+
+it was resolved then I got this error:
+
+WARN  [health_and_arming_checks] Preflight Fail: No connection to the GCS
+INFO  [uxrce_dds_client] init UDP agent IP:127.0.0.1, port:8888
+INFO  [mavlink] mode: Normal, data rate: 4000000 B/s on udp port 18570 remote port 14550
+INFO  [tone_alarm] home set
+INFO  [mavlink] mode: Onboard, data rate: 4000000 B/s on udp port 14580 remote port 14540
+INFO  [mavlink] mode: Onboard, data rate: 4000 B/s on udp port 14280 remote port 14030
+INFO  [mavlink] mode: Gimbal, data rate: 400000 B/s on udp port 13030 remote port 13280
+INFO  [logger] logger started (mode=all)
+INFO  [logger] Start file log (type: full)
+INFO  [logger] [logger] ./log/2026-09-30/12_07_27.ulg	
+INFO  [logger] Opened full log file: ./log/2026-09-30/12_07_27.ulg
+INFO  [mavlink] MAVLink only on localhost (set param MAV_{i}_BROADCAST = 1 to enable network)
+INFO  [mavlink] MAVLink only on localhost (set param MAV_{i}_BROADCAST = 1 to enable network)
+INFO  [px4] Startup script returned successfully
+pxh> WARN  [health_and_arming_checks] Preflight Fail: No connection to the GCS
+WARN  [health_and_arming_checks] Preflight Fail: No connection to the GCS
+INFO  [uxrce_dds_client] synchronized with time offset 1790770042862107us
+
+So as we did before I did param set 
+
+param set NAV_DLL_ACT 0
+
+and it was working

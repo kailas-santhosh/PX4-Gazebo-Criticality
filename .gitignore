@@ -1,0 +1,35 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# ROS
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# PX4
+robotics/
+micro-xrce-dds/
+
+# Logs
+*.ulg
+logs/
+*.log
+
+# Dataset
+dataset/
+datasets/
+output/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+*.swp
+*.swo
