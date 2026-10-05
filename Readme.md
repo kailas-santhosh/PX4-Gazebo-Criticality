@@ -83,7 +83,7 @@ Build the Docker image
 ```bash
 cd docker
 
-docker compose build --no-cache
+sudo docker compose build --no-cache
 
 cd ..
 ```
@@ -91,7 +91,7 @@ cd ..
 Start the development container
 
 ```bash
-./scripts/host/start_dev.sh
+sudo ./scripts/host/start_dev.sh
 ```
 
 ---
@@ -152,6 +152,8 @@ Open Terminal 2
 ./scripts/host/start_dev.sh
 
 sim
+
+param set NAV_DLL_ACT 0
 ```
 
 Open Terminal 3
