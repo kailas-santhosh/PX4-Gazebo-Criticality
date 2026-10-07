@@ -169,8 +169,14 @@ ros2 run criticality_core offboard_takeoff
 ```
 cd /workspace/ros2_ws
 source /opt/ros/jazzy/setup.bash
-rm -rf build/px4_msgs install/px4_msgs
 colcon build --symlink-install
+```
+If PX4_msgs error occurs - run this:
+
+```
+rm -rf build/px4_msgs install/px4_msgs
+```
+
 ```
 
 ---
