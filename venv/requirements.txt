@@ -1,3 +1,9 @@
+catkin_pkg
+empy
+lark
+packaging
+pyyaml
+setuptools
 attrs
 certifi
 click
