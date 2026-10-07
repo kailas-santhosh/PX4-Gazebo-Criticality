@@ -164,7 +164,7 @@ Open Terminal 3
 ros2 run criticality_core offboard_takeoff
 ```
 
-# On each rebuild - Run these:
+# On each rebuild - Run these(**inside the container**):
 
 ```
 cd /workspace/ros2_ws
