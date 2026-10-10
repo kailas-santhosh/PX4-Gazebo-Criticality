@@ -83,7 +83,7 @@ Build the Docker image
 ```bash
 cd docker
 
-sudo docker compose build --no-cache
+docker compose build --no-cache
 
 cd ..
 ```
@@ -91,7 +91,7 @@ cd ..
 Start the development container
 
 ```bash
-sudo ./scripts/host/start_dev.sh
+./scripts/host/start_dev.sh
 ```
 
 ---
