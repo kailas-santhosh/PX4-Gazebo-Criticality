@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+
+  <model name="tree">
+
+    <static>true</static>
+    
+    <pose>-3.5 -3.5 -1 0 0 0</pose>
+
+    <link name="tree_link">
+
+      <!-- Trunk -->
+
+      <visual name="trunk_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>2.0</length>
+          </cylinder>
+        </geometry>
+
+        <material>
+          <ambient>0.4 0.2 0.1 1</ambient>
+          <diffuse>0.4 0.2 0.1 1</diffuse>
+        </material>
+
+        <pose>0 0 1 0 0 0</pose>
+
+      </visual>
+
+      <!-- Leaves -->
+
+      <visual name="leaf_visual">
+
+        <geometry>
+
+          <sphere>
+
+            <radius>0.8</radius>
+
+          </sphere>
+
+        </geometry>
+
+        <material>
+
+          <ambient>0 0.7 0 1</ambient>
+
+          <diffuse>0 0.7 0 1</diffuse>
+
+        </material>
+
+        <pose>0 0 2.4 0 0 0</pose>
+
+      </visual>
+
+    </link>
+
+  </model>
+
+</sdf>

@@ -1,0 +1,76 @@
+
+# ==========================================================
+# Experiment Configuration
+# ==========================================================
+
+experiment:
+
+  name: "square_mission_baseline"
+
+  random_seed: null
+
+  max_duration: 180.0
+
+
+# ==========================================================
+# Navigation
+# ==========================================================
+
+navigation:
+
+  mode: "fixed_waypoints"
+
+
+# ==========================================================
+# Criticality Events
+# ==========================================================
+
+events:
+
+  # --------------------------------------------------------
+  # Event 1: Static Obstacle
+  # Spawn a box near waypoint 2
+  # --------------------------------------------------------
+
+  - id: obstacle_001
+
+    type: obstacle
+
+    enabled: true
+
+    severity: high
+
+    trigger:
+
+      x: 4.5
+      y: 0.0
+      z: -3.0
+      radius: 0.75
+
+    parameters:
+
+      model_file: critical_box.sdf
+
+      model_name: critical_box_001
+
+      spawn:
+
+        x: 5.0
+        y: 0.0
+        z: 0.5
+
+
+# ==========================================================
+# Dataset Logging
+# ==========================================================
+
+logging:
+
+  save_images: true
+
+  save_imu: true
+
+  save_groundtruth: true
+
+  save_criticality_labels: true
+

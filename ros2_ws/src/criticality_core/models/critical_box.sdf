@@ -6,7 +6,7 @@
 
     <static>true</static>
 
-    <pose>2.5 2.5 1 0 0 0</pose>
+    <pose>-2.5 -2.5 1 0 0 0</pose>
 
     <link name="body">
 
@@ -14,7 +14,7 @@
 
         <geometry>
           <box>
-            <size>1 1 2</size>
+            <size>0 0 0</size>
           </box>
         </geometry>
 
@@ -29,8 +29,8 @@
         </geometry>
 
         <material>
-          <ambient>1 0 0 1</ambient>
-          <diffuse>1 0 0 1</diffuse>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
         </material>
 
       </visual>

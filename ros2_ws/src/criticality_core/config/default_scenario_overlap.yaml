@@ -1,0 +1,264 @@
+# ==========================================================
+# Experiment Configuration
+# ==========================================================
+
+experiment:
+
+  name: "default_scenario"
+
+  random_seed: null
+
+  max_duration: 180.0
+
+
+# ==========================================================
+# Navigation
+# ==========================================================
+
+navigation:
+
+  #
+  # Phase 1 still uses the existing waypoint mission.
+  # This will become "moving_target" later.
+  #
+
+  mode: "fixed_waypoints"
+
+
+# ==========================================================
+# Criticality Events
+# ==========================================================
+
+events:
+
+  # --------------------------------------------------
+  # Event 1: Critical Obstacle
+  # Spawn a box near waypoint 2
+  # --------------------------------------------------
+
+  - id: obstacle_001
+
+    type: obstacle
+
+    enabled: true
+
+    severity: high
+
+    trigger:
+
+      x: 4.5
+      y: 0.0
+      z: -3.0
+      radius: 0.75
+
+    parameters:
+
+      model_file: critical_box.sdf
+
+      model_name: critical_box_001
+
+      spawn:
+
+        x: 5.0
+        y: 0.0
+        z: 0.5
+
+  # --------------------------------------------------
+  # Event 2: Tree Obstacle
+  # Spawn a tree near waypoint 3
+  # --------------------------------------------------
+
+  - id: tree_001
+
+    type: obstacle
+
+    enabled: true
+
+    severity: medium
+
+    trigger:
+
+      x: 5.0
+      y: 4.5
+      z: -3.0
+      radius: 0.75
+
+    parameters:
+
+      model_file: tree.sdf
+
+      model_name: tree_001
+
+      spawn:
+
+        x: 5.0
+        y: 5.0
+        z: -1.0
+        
+  # --------------------------------------------------
+  # Event 3: Drone-Relative Obstacle
+  # Spawn 5m ahead and 2m to the right of the
+  # drone's direction of travel, 40 seconds after start.
+  # --------------------------------------------------
+
+  - id: dynamic_obstacle_001
+
+    type: obstacle
+
+    enabled: true
+
+    severity: high
+
+    trigger:
+
+      type: time
+
+      delay: 15.0
+
+    parameters:
+
+      model_file: critical_box.sdf
+
+      model_name: dynamic_obstacle_001
+
+      spawn:
+
+        reference: direction_of_travel
+
+        forward: 5.0
+
+        right: 2.0
+
+        down: 0.0
+
+  # --------------------------------------------------
+  # Event 3: GPS Denial Zone
+  # GPS noise is randomized inside the event
+  # --------------------------------------------------
+
+  - id: gps_001
+
+    type: gps_denied
+
+    enabled: true
+
+    severity: high
+
+    trigger:
+
+      x: 0.0
+      y: 4.5
+      z: -3.0
+      radius: 1.5
+
+  # --------------------------------------------------
+  # Event 4: Camera Degradation Zone
+  # --------------------------------------------------
+
+  - id: camera_001
+
+    type: sensor_degradation
+
+    enabled: true
+
+    severity: high
+
+    trigger:
+
+      x: 0.0
+      y: 0.0
+      z: -3.0
+      radius: 1.0
+
+    parameters:
+
+      sensor: camera
+
+  # --------------------------------------------------
+  # Event 5: Battery Emergency
+  # Battery drain rate is randomized inside the event
+  # --------------------------------------------------
+
+  - id: battery_001
+
+    type: battery
+
+    enabled: true
+
+    severity: high
+
+    trigger:
+
+      x: 0.0
+      y: 0.0
+      z: -3.0
+      radius: 0.75
+
+    parameters:
+
+      minimum_percentage: 1.0
+
+  # --------------------------------------------------
+  # Event 6: Gyro Sensor Degradation Zone
+  # NOTE: Trigger location overlaps with the GPS
+  # denial zone. Consider giving this its own trigger
+  # location for independent observation.
+  # --------------------------------------------------
+
+  - id: gyro_001
+
+    type: sensor_degradation
+
+    enabled: true
+
+    severity: high
+
+    trigger:
+
+      x: 0.0
+      y: 4.5
+      z: -3.0
+      radius: 1.5
+
+    parameters:
+
+      sensor: gyro
+
+  # --------------------------------------------------
+  # Event 7: Time-Based Camera Degradation
+  # Activate 30 seconds after experiment start
+  # --------------------------------------------------
+
+  - id: camera_time_001
+
+    type: sensor_degradation
+
+    enabled: true
+
+    severity: high
+
+    trigger:
+
+      type: time
+
+      delay: 30.0
+
+      duration: 15.0
+
+    parameters:
+
+      sensor: camera
+
+
+# ==========================================================
+# Dataset Logging
+# ==========================================================
+
+logging:
+
+  save_images: true
+
+  save_imu: true
+  save_groundtruth: true
+
+  save_criticality_labels: true

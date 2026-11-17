@@ -26,4 +26,4 @@ cd /workspace/robotics/PX4-Autopilot
 echo "[3/3] Launching PX4 SITL + Gazebo..."
 echo
 
-exec make px4_sitl gz_x500
+exec make px4_sitl gz_x500_mono_cam
